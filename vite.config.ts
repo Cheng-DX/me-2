@@ -1,4 +1,5 @@
-import path from 'node:path'
+import { basename, resolve } from 'node:path'
+import fs from 'fs-extra'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import generateSitemap from 'vite-ssg-sitemap'
@@ -9,17 +10,26 @@ import Markdown from 'unplugin-vue-markdown/vite'
 import VueMacros from 'unplugin-vue-macros/vite'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
 import { VitePWA } from 'vite-plugin-pwa'
-import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
-import Shiki from 'markdown-it-shikiji'
+import MarkdownItShikiji from 'markdown-it-shikiji'
 import WebfontDownload from 'vite-plugin-webfont-dl'
 import VueRouter from 'unplugin-vue-router/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
+import anchor from 'markdown-it-anchor'
+import LinkAttributes from 'markdown-it-link-attributes'
+import GitHubAlerts from 'markdown-it-github-alerts'
+import { rendererRich, transformerTwoSlash } from 'shikiji-twoslash'
+import { slugify } from './script/slugify'
+
+// @ts-expect-error missing types
+import TOC from 'markdown-it-table-of-contents'
+
+const promises: Promise<any>[] = []
 
 export default defineConfig({
   resolve: {
     alias: {
-      '~/': `${path.resolve(__dirname, 'src')}/`,
+      '~/': `${resolve(__dirname, 'src')}/`,
     },
   },
 
@@ -76,11 +86,42 @@ export default defineConfig({
     Unocss(),
 
     // https://github.com/unplugin/unplugin-vue-markdown
-    // Don't need this? Try vitesse-lite: https://github.com/antfu/vitesse-lite
     Markdown({
-      wrapperClasses: 'prose prose-sm m-auto text-left',
+      wrapperComponent: 'WrapperPost',
+      wrapperClasses: (id, code) => code.includes('@layout-full-width')
+        ? ''
+        : 'prose m-auto slide-enter-content',
       headEnabled: true,
+      exportFrontmatter: false,
+      exposeFrontmatter: false,
+      exposeExcerpt: false,
+      markdownItOptions: {
+        quotes: '""\'\'',
+      },
       async markdownItSetup(md) {
+        md.use(await MarkdownItShikiji({
+          themes: {
+            dark: 'vitesse-dark',
+            light: 'vitesse-light',
+          },
+          defaultColor: false,
+          cssVariablePrefix: '--s-',
+          transformers: [
+            transformerTwoSlash({
+              explicitTrigger: true,
+              renderer: rendererRich(),
+            }),
+          ],
+        }))
+
+        md.use(anchor, {
+          slugify,
+          permalink: anchor.permalink.linkInsideHeader({
+            symbol: '#',
+            renderAttrs: () => ({ 'aria-hidden': 'true' }),
+          }),
+        })
+
         md.use(LinkAttributes, {
           matcher: (link: string) => /^https?:\/\//.test(link),
           attrs: {
@@ -88,15 +129,33 @@ export default defineConfig({
             rel: 'noopener',
           },
         })
-        md.use(await Shiki({
-          defaultColor: false,
-          themes: {
-            light: 'vitesse-light',
-            dark: 'vitesse-dark',
-          },
-        }))
+
+        md.use(TOC, {
+          includeLevel: [1, 2, 3, 4],
+          slugify,
+          containerHeaderHtml: '<div class="table-of-contents-anchor"><div class="i-ri-menu-2-fill" /></div>',
+        })
+
+        md.use(GitHubAlerts)
+      },
+      frontmatterPreprocess(frontmatter, options, id, defaults) {
+        (() => {
+          if (!id.endsWith('.md'))
+            return
+          const route = basename(id, '.md')
+          if (route === 'index' || frontmatter.image || !frontmatter.title)
+            return
+          const path = `og/${route}.png`
+          if (fs.existsSync(`${id.slice(0, -3)}.png`)) {
+            promises.push(fs.copy(`${id.slice(0, -3)}.png`, `public/${path}`))
+          }
+          frontmatter.image = `https://antfu.me/${path}`
+        })()
+        const head = defaults(frontmatter, options)
+        return { head, frontmatter }
       },
     }),
+
 
     // https://github.com/antfu/vite-plugin-pwa
     VitePWA({
@@ -132,7 +191,7 @@ export default defineConfig({
       runtimeOnly: true,
       compositionOnly: true,
       fullInstall: true,
-      include: [path.resolve(__dirname, 'locales/**')],
+      include: [resolve(__dirname, 'locales/**')],
     }),
 
     // https://github.com/feat-agency/vite-plugin-webfont-dl
