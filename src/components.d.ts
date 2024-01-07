@@ -7,12 +7,17 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    BlogList: typeof import('./components/BlogList.vue')['default']
+    ContentList: typeof import('./components/ContentList.vue')['default']
+    Contents: typeof import('./components/Contents.vue')['default']
+    ListPosts: typeof import('./components/ListPosts.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheCounter: typeof import('./components/TheCounter.vue')['default']
     TheFooter: typeof import('./components/TheFooter.vue')['default']
     TheHeader: typeof import('./components/TheHeader.vue')['default']
     TheInput: typeof import('./components/TheInput.vue')['default']
+    TwitterCard: typeof import('./components/TwitterCard.vue')['default']
     WrapperPost: typeof import('./components/WrapperPost.vue')['default']
   }
 }

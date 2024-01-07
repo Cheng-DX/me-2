@@ -20,6 +20,7 @@ import LinkAttributes from 'markdown-it-link-attributes'
 import GitHubAlerts from 'markdown-it-github-alerts'
 import { rendererRich, transformerTwoSlash } from 'shikiji-twoslash'
 import { slugify } from './script/slugify'
+import Inspect from 'vite-plugin-inspect'
 
 // @ts-expect-error missing types
 import TOC from 'markdown-it-table-of-contents'
@@ -34,6 +35,7 @@ export default defineConfig({
   },
 
   plugins: [
+    Inspect(),
     VueMacros({
       plugins: {
         vue: Vue({
@@ -133,7 +135,11 @@ export default defineConfig({
         md.use(TOC, {
           includeLevel: [1, 2, 3, 4],
           slugify,
-          containerHeaderHtml: '<div class="table-of-contents-anchor"><div class="i-ri-menu-2-fill" /></div>',
+          containerHeaderHtml: `
+          <div class="table-of-contents-anchor">
+            <div class="i-carbon-menu" />
+            <span>Contents</span>
+          </div>`,
         })
 
         md.use(GitHubAlerts)
@@ -162,8 +168,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'safari-pinned-tab.svg'],
       manifest: {
-        name: 'Vitesse',
-        short_name: 'Vitesse',
+        name: 'dxx.me',
+        short_name: 'dxx',
         theme_color: '#ffffff',
         icons: [
           {

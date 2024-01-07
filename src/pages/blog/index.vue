@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import blogs from './blogs'
 
+const { t } = useI18n()
 </script>
 
 <template>
-  Blogs
+  <ContentList :contents="blogs" :name="t('header.blog')" />
 </template>
-
-<style scoped></style>

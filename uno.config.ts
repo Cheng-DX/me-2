@@ -4,7 +4,6 @@ import {
   presetIcons,
   presetTypography,
   presetUno,
-  presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
@@ -21,16 +20,16 @@ export default defineConfig({
       scale: 1.2,
     }),
     presetTypography(),
-    presetWebFonts({
-      fonts: {
-        sans: 'Inter:400,600,800',
-        mono: 'DM Mono:400,600',
-      },
-    }),
+    // presetWebFonts({
+    //   fonts: {
+    //     sans: 'Inter:400,600,800',
+    //     mono: 'DM Mono:400,600',
+    //   },
+    // }),
   ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
   ],
-  safelist: 'prose m-auto text-left'.split(' '),
+  safelist: 'prose m-auto text-left i-carbon-menu'.split(' '),
 })

@@ -12,3 +12,8 @@ intro:
   aka: 也叫
   whats-your-name: 输入你的名字
 not-found: 未找到页面
+
+header:
+  blog: 文章
+  idea: 想法
+  demos: 演示

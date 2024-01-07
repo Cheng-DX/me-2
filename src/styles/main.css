@@ -10,6 +10,10 @@ html {
   overflow-y: scroll;
 }
 
+.fonts {
+  font-family: 'DM Sans';
+}
+
 html.dark {
   --c-bg: #050505;
   --c-scrollbar: #111;

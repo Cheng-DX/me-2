@@ -4,6 +4,8 @@ author: "Antfu"
 date: "2020-10-10"
 ---
 
+[[toc]]
+
 > 这是我在2020滨江前端沙龙分享的文稿1
 >
 > This is the transcript of my talk at BinFE 2020

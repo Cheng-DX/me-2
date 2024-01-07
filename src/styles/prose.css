@@ -49,7 +49,7 @@
 }
 .prose ol > li {
   position: relative;
-  padding-left: 1.75em;
+  padding-left: 1em;
 }
 .prose ol > li::before {
   content: counter(list-item, var(--list-counter-style, decimal)) '.';
@@ -60,7 +60,7 @@
 }
 .prose ul > li {
   position: relative;
-  padding-left: 1.75em;
+  padding-left: 1em;
 }
 .prose ul > li::before {
   content: '';
