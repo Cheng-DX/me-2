@@ -10,6 +10,8 @@ declare module 'vue' {
     BlogList: typeof import('./components/BlogList.vue')['default']
     ContentList: typeof import('./components/ContentList.vue')['default']
     Contents: typeof import('./components/Contents.vue')['default']
+    DiffCodes: typeof import('./components/DiffCodes.vue')['default']
+    HoverCard: typeof import('./components/HoverCard.vue')['default']
     ListPosts: typeof import('./components/ListPosts.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

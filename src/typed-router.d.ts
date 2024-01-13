@@ -42,9 +42,12 @@ declare module 'vue-router/auto/routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...all]': RouteRecordInfo<'/[...all]', '/:all(.*)', { all: ParamValue<true> }, { all: ParamValue<false> }>,
     '/blog/': RouteRecordInfo<'/blog/', '/blog', Record<never, never>, Record<never, never>>,
-    '/blog/about-ts': RouteRecordInfo<'/blog/about-ts', '/blog/about-ts', Record<never, never>, Record<never, never>>,
-    '/blog/long': RouteRecordInfo<'/blog/long', '/blog/long', Record<never, never>, Record<never, never>>,
+    '/blog/diff-match-patch': RouteRecordInfo<'/blog/diff-match-patch', '/blog/diff-match-patch', Record<never, never>, Record<never, never>>,
+    '/blog/next-tick.en': RouteRecordInfo<'/blog/next-tick.en', '/blog/next-tick/en', Record<never, never>, Record<never, never>>,
+    '/blog/next-tick.zh-CN': RouteRecordInfo<'/blog/next-tick.zh-CN', '/blog/next-tick/zh-CN', Record<never, never>, Record<never, never>>,
+    '/blog/type-safe-is-function': RouteRecordInfo<'/blog/type-safe-is-function', '/blog/type-safe-is-function', Record<never, never>, Record<never, never>>,
     '/demos/': RouteRecordInfo<'/demos/', '/demos', Record<never, never>, Record<never, never>>,
+    '/demos/card': RouteRecordInfo<'/demos/card', '/demos/card', Record<never, never>, Record<never, never>>,
     '/idea/': RouteRecordInfo<'/idea/', '/idea', Record<never, never>, Record<never, never>>,
   }
 }

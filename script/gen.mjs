@@ -11,7 +11,7 @@ function generate(pattern, outFile) {
     const { attributes } = frontMatter(content)
     return {
       ...attributes,
-      path: blog.replace('src/pages', '').replace('.md', ''),
+      path: blog.replace('src/pages', '').replace('.md', '').replaceAll('.', '/'),
       readTime,
     }
   })

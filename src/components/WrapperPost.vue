@@ -6,9 +6,18 @@ const { frontmatter } = defineProps({
   },
 })
 
+const { t, locale } = useI18n()
+const allLangs: string[] = frontmatter.supports || ['en', 'zh-CN']
 const router = useRouter()
 const route = useRoute()
 const content = ref<HTMLDivElement>()
+
+function createLink(lang: string) {
+  const { path } = route
+  const url = new URL(path, window.location.origin)
+  url.href = url.href.replace(/\/[\w\-]+$/, `/${lang}`)
+  return url.toString()
+}
 
 onMounted(() => {
   const navigate = () => {
@@ -86,8 +95,17 @@ onMounted(() => {
     <p v-if="frontmatter.subtitle" class="opacity-50 !-mt-6 italic slide-enter">
       {{ frontmatter.subtitle }}
     </p>
-    <p v-if="frontmatter.draft" class="slide-enter" bg-orange-4:10 text-orange-4 border="l-3 orange-4" px4 py2>
-      This is a draft post, the content may be incomplete. Please check back later.
+    <p v-if="frontmatter.i18n && frontmatter.lang !== locale">
+      <span>
+        {{ t('marks.has-more-langs') }}
+      </span>
+      <span v-for="lang in allLangs" :key="lang" ml-1>
+        <span v-if="lang !== frontmatter.lang" opacity-50 flex-inline items-center gap-1>
+          <a :href="createLink(lang)">{{ lang }}</a>
+          <div i-carbon-link inline-block />
+          <span v-if="lang !== allLangs[allLangs.length - 1]">,</span>
+        </span>
+      </span>
     </p>
   </div>
   <article ref="content" :class="[frontmatter.tocAlwaysOn ? 'toc-always-on' : '', frontmatter.class]">

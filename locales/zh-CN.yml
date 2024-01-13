@@ -17,3 +17,10 @@ header:
   blog: 文章
   idea: 想法
   demos: 演示
+
+langs:
+  zh-CN: 简体中文
+  en: 英文
+
+marks:
+  has-more-langs: 或许这个语言版本的页面更加适合你

@@ -1,14 +1,26 @@
 export default [
   {
-    "title": "Write type-safe function judgement in TypeScript",
-    "path": "/blog/about-ts",
+    "title": "Diff Match Patch",
+    "path": "/blog/diff-match-patch",
     "readTime": 1
   },
   {
-    "title": "The Vue Reactivity, Lecture on BinFE 2020",
-    "author": "Antfu",
-    "date": "2020-10-10",
-    "path": "/blog/long",
-    "readTime": 8
+    "title": "nextTick function returns a Promise",
+    "i18n": true,
+    "lang": "en",
+    "path": "/blog/next-tick/en",
+    "readTime": 1
+  },
+  {
+    "title": "nextTick函数返回一个Promise",
+    "i18n": true,
+    "lang": "zh-CN",
+    "path": "/blog/next-tick/zh-CN",
+    "readTime": 1
+  },
+  {
+    "title": "Write type-safe function judgement in TypeScript",
+    "path": "/blog/type-safe-is-function",
+    "readTime": 1
   }
 ]

@@ -144,22 +144,6 @@ export default defineConfig({
 
         md.use(GitHubAlerts)
       },
-      frontmatterPreprocess(frontmatter, options, id, defaults) {
-        (() => {
-          if (!id.endsWith('.md'))
-            return
-          const route = basename(id, '.md')
-          if (route === 'index' || frontmatter.image || !frontmatter.title)
-            return
-          const path = `og/${route}.png`
-          if (fs.existsSync(`${id.slice(0, -3)}.png`)) {
-            promises.push(fs.copy(`${id.slice(0, -3)}.png`, `public/${path}`))
-          }
-          frontmatter.image = `https://antfu.me/${path}`
-        })()
-        const head = defaults(frontmatter, options)
-        return { head, frontmatter }
-      },
     }),
 
 
@@ -206,7 +190,7 @@ export default defineConfig({
 
   // https://github.com/vitest-dev/vitest
   test: {
-    include: ['test/**/*.test.ts'],
+    // include: ['test/**/*.test.ts'],
     environment: 'jsdom',
   },
 

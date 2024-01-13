@@ -17,3 +17,11 @@ header:
   blog: Blog
   idea: Idea
   demos: Demos
+
+langs:
+  zh-CN: simplified Chinese
+  en: English
+
+marks:
+# 或许这个语言版本的页面更加适合你
+  has-more-langs: Maybe this language version of the page is more suitable for you
