@@ -14,9 +14,7 @@ const content = ref<HTMLDivElement>()
 
 function createLink(lang: string) {
   const { path } = route
-  const url = new URL(path, window.location.origin)
-  url.href = url.href.replace(/\/[\w\-]+$/, `/${lang}`)
-  return url.toString()
+  return path.replace(/\/[\w\-]+$/, `/${lang}`)
 }
 
 onMounted(() => {
